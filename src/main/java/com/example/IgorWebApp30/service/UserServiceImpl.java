@@ -1,7 +1,6 @@
 package com.example.IgorWebApp30.service;
 
 
-
 import com.example.IgorWebApp30.model.Role;
 import com.example.IgorWebApp30.model.User;
 import com.example.IgorWebApp30.repository.UserRepository;
@@ -37,8 +36,18 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        User existingUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new RuntimeException("User  not found"));
+
+        existingUser.setUsername(user.getUsername());
+        existingUser.setEmail(user.getEmail());
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        existingUser.setRoles(user.getRoles());
+
+        userRepository.save(existingUser);
+
     }
 
     @Override
@@ -61,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public User getUserByUsername(String username) {
-     return userRepository.getUserByUsername(username);
+        return userRepository.getUserByUsername(username);
     }
 
     @Override

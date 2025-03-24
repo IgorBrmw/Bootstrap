@@ -200,7 +200,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="editPassword" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="editPassword" name="password">
+                                    <input type="password" class="form-control" id="editPassword" name="password" placeholder="Leave empty to keep current password">
                                 </div>
                                 <div class="mb-3">
                                     <label for="editRoles" class="form-label">Roles</label>
@@ -339,7 +339,7 @@
             document.getElementById('editUserId').value = userId;
             document.getElementById('editUsername').value = username;
             document.getElementById('editEmail').value = email;
-
+            document.getElementById('editPassword').value = '';
 
             const roleSelect = document.getElementById('editRoles');
             Array.from(roleSelect.options).forEach(option => {
